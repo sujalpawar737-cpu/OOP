@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About & Method - Government Scheme Eligibility Finder</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="flag-strip"></div>
+<div class="notice"><strong>Academic prototype.</strong> This is a student project, not an official Government of India website. Always verify on the official link before applying.</div>
+
+<header class="site">
+  <div class="wrap brand">
+    <div class="badge-logo">OOP<br>C++</div>
+    <div>
+      <h1>Government Scheme Eligibility Finder</h1>
+      <p>Find schemes you may be eligible for &middot; compare benefits &middot; check which can be combined</p>
+    </div>
+  </div>
+</header>
+
+<nav class="main" aria-label="Main">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="check.html">Check Eligibility</a></li>
+    <li><a href="schemes.html">Scheme Directory</a></li>
+    <li><a href="about.html" class="active">About &amp; Method</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="wrap">
+<h2 class="first">About this system and its method</h2>
+
+<h3>What it is</h3>
+<p>An Object Oriented Programming course project written in C++. A C++ program works as the web server: it serves these pages and answers their requests. The eligibility checking, benefit calculation and combination analysis all run in C++ classes.</p>
+
+<h3>How results are decided</h3>
+<ul>
+  <li><strong>Eligible based on the information provided</strong>: every criterion the system knows about is met by your answers.</li>
+  <li><strong>Potentially eligible; verify with the official authority</strong>: no criterion fails, but an answer is missing or &ldquo;Not sure&rdquo;, or the scheme depends on competitive selection or an official beneficiary list.</li>
+  <li><strong>Not eligible based on the information provided</strong>: at least one criterion is not met. The reason is shown.</li>
+</ul>
+
+<h3>Benefit estimates</h3>
+<p>Amounts are estimates from published scheme norms and from the numbers you enter (loan size, project cost, land area). The basis of every calculation is displayed. Insurance cover and future pension are shown separately and never added to cash. Where a figure needed an assumption (for example the rupee value of free grain), the assumption is stated.</p>
+
+<h3>Combination rules</h3>
+<p>Each restriction records its reason, a source link and a confidence label. <span class="pill official">official</span> means it was found in the published guidelines of the scheme. <span class="pill conservative">conservative</span> means the prototype is being cautious and the point should be confirmed. If no restriction is recorded between two schemes the system says so, but that is not a guarantee that they can be combined.</p>
+
+<h3>Recommendation</h3>
+<p>The program tries every conflict-free combination of the schemes open to you and picks the one with the highest score for your preference (money, cover or balanced) over your planning period. If two combinations score the same, the one with more schemes is chosen.</p>
+
+<h3>Dataset</h3>
+<p>About 56 schemes in five domains, taken from official and government-published sources and reviewed in October 2026. Schemes change often, so every scheme shows a &ldquo;dataset checked&rdquo; date and its official link. The data lives in plain text files in the <code>data/</code> folder.</p>
+
+<h3>Object oriented concepts used</h3>
+<div class="table-wrap">
+<table class="data">
+  <tr><th>Concept</th><th>Where it is used in the code</th></tr>
+  <tr><td>Classes, objects, constructors, destructor</td><td><code>Scheme</code>, <code>FieldDef</code>, <code>UserProfile</code>; <code>~Scheme()</code> reduces the live scheme count</td></tr>
+  <tr><td>Static member, <code>this</code> pointer</td><td><code>Scheme::liveCount()</code>; chained setters such as <code>FieldDef::setUnit()</code> return <code>*this</code></td></tr>
+  <tr><td>Inheritance and virtual functions</td><td><code>Rule</code> &rarr; NumericRule, SetRule, BoolRule, CompositeRule; <code>Benefit</code> &rarr; Fixed, PerUnit, Percent, Interest, Tiered, Composite</td></tr>
+  <tr><td>Pure virtual functions, polymorphism</td><td><code>Rule::evaluate()</code> and <code>Benefit::evaluate()</code> are called through base class pointers</td></tr>
+  <tr><td>Multilevel inheritance</td><td><code>Benefit</code> &rarr; <code>FixedBenefit</code> &rarr; <code>ServiceBenefit</code></td></tr>
+  <tr><td>Multiple and virtual base class</td><td><code>Scheme</code> inherits <code>Linkable</code> and <code>Verifiable</code>, which share one virtual base <code>Entity</code></td></tr>
+  <tr><td>Operator overloading, friend function</td><td><code>BenefitValue::operator+=</code>, <code>Combination::operator&gt;</code>, <code>operator&lt;&lt;</code> for <code>Scheme</code></td></tr>
+  <tr><td>Function overloading</td><td><code>JsonObject::add()</code> for text, numbers and true/false</td></tr>
+  <tr><td>Templates and STL</td><td><code>Registry&lt;T&gt;</code>, <code>jsonArray&lt;T&gt;</code>; vector, map, set, queue</td></tr>
+  <tr><td>Namespace</td><td><code>util::</code> helper functions</td></tr>
+  <tr><td>Exception handling</td><td><code>DataError</code> and <code>InputError</code> (custom exceptions), try / catch in the loader and the API</td></tr>
+  <tr><td>File handling</td><td>Text data files read by <code>DataLoader</code>; a binary usage log written by <code>UsageLog</code></td></tr>
+</table>
+</div>
+
+<h2>Usage so far</h2>
+<p class="small">Only the domain and the counts of results are logged, never the answers you enter.</p>
+<div id="stats"><p class="message">Loading...</p></div>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Disclaimer:</strong> Results are indicative. They depend only on the information you enter and on a small curated sample of schemes, and they are not a guarantee of eligibility or benefit. Criteria and amounts change, so confirm with the official authority using the link shown for each scheme.</p>
+    <p>Your answers are used only to produce the result. They are not stored; only the domain name and the result counts are saved in a log file.</p>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/about.js"></script>
+</body>
+</html>

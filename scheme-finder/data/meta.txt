@@ -1,0 +1,5 @@
+meta site
+title = Government Scheme Eligibility Finder
+version = 1.0 (academic prototype)
+dataset_reviewed = October 2026
+disclaimer = This is an academic prototype, not an official Government of India service. The dataset is a small curated sample, not all schemes. Criteria are simplified from published guidelines and may have changed. Results are indicative: always verify with the official authority before applying. Benefit amounts are estimates.

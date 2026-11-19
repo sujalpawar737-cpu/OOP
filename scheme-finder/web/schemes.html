@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scheme Directory - Government Scheme Eligibility Finder</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="flag-strip"></div>
+<div class="notice"><strong>Academic prototype.</strong> This is a student project, not an official Government of India website. Always verify on the official link before applying.</div>
+
+<header class="site">
+  <div class="wrap brand">
+    <div class="badge-logo">OOP<br>C++</div>
+    <div>
+      <h1>Government Scheme Eligibility Finder</h1>
+      <p>Find schemes you may be eligible for &middot; compare benefits &middot; check which can be combined</p>
+    </div>
+  </div>
+</header>
+
+<nav class="main" aria-label="Main">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="check.html">Check Eligibility</a></li>
+    <li><a href="schemes.html" class="active">Scheme Directory</a></li>
+    <li><a href="about.html">About &amp; Method</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="wrap">
+<h2 class="first">Scheme directory</h2>
+<p>All the schemes in this prototype, with the criteria the system uses. Pick a domain or type a word to search.</p>
+
+<div class="fields">
+  <div class="field">
+    <label for="domain">Domain</label>
+    <select id="domain"><option value="all">All domains</option></select>
+  </div>
+  <div class="field">
+    <label for="search">Search</label>
+    <input id="search" type="search" placeholder="e.g. scholarship, pension, loan" autocomplete="off">
+  </div>
+</div>
+<p class="small" id="count"></p>
+<div id="list"></div>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Disclaimer:</strong> Results are indicative. They depend only on the information you enter and on a small curated sample of schemes, and they are not a guarantee of eligibility or benefit. Criteria and amounts change, so confirm with the official authority using the link shown for each scheme.</p>
+    <p>Your answers are used only to produce the result. They are not stored; only the domain name and the result counts are saved in a log file.</p>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/schemes.js"></script>
+</body>
+</html>

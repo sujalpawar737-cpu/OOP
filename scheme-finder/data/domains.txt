@@ -1,0 +1,24 @@
+domain education
+name = Education
+description = Scholarships, education loans and school support.
+fields = state age gender area category minority annual_income disability_pct bpl study_level course_stream institution_type last_exam_percent class12_percentile hosteller course_duration_years annual_fees edu_loan_amount qheis other_scholarship
+
+domain agriculture
+name = Agriculture
+description = Farmer income support, insurance, credit and farm investment.
+fields = state age gender category occupation monthly_income land_status land_hectares grows_crops crop_loan_amount agri_infra_loan solar_pump_cost machinery_cost fisheries_project_cost organic_interest income_tax_payer govt_employee_self monthly_pension_10k high_office unorganised_worker covered_other_pension
+
+domain health
+name = Healthcare
+description = Health insurance, maternal and child health, disease support.
+fields = state age gender area category bpl ration_card occupation disability_pct maternity_status child_order delivery_institutional govt_employee_self tb_patient kutcha_house landless_manual_labour female_headed_no_adult_male
+
+domain employment
+name = Employment & Entrepreneurship
+description = Self-employment loans and subsidies, skilling and wage employment.
+fields = state age gender area category minority annual_income disability_pct bpl occupation qualification business_stage sector project_cost loan_required prior_pmegp_subsidy prior_selfemp_loan first_job_epfo monthly_salary govt_employee_family
+
+domain social
+name = Social Welfare & Housing
+description = Housing, pensions, food security, insurance and inclusion.
+fields = state age gender area category occupation annual_income monthly_income household_size disability_pct bpl ration_card house_status owns_vehicle owns_plot home_loan_amount house_cost has_toilet has_lpg has_bank_account widowed women_headed unorganised_worker income_tax_payer covered_other_pension govt_employee_family

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home - Government Scheme Eligibility Finder</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="flag-strip"></div>
+<div class="notice"><strong>Academic prototype.</strong> This is a student project, not an official Government of India website. Always verify on the official link before applying.</div>
+
+<header class="site">
+  <div class="wrap brand">
+    <div class="badge-logo">OOP<br>C++</div>
+    <div>
+      <h1>Government Scheme Eligibility Finder</h1>
+      <p>Find schemes you may be eligible for &middot; compare benefits &middot; check which can be combined</p>
+    </div>
+  </div>
+</header>
+
+<nav class="main" aria-label="Main">
+  <ul>
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="check.html">Check Eligibility</a></li>
+    <li><a href="schemes.html">Scheme Directory</a></li>
+    <li><a href="about.html">About &amp; Method</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="wrap">
+<h2 class="first">Find government schemes you may be eligible for</h2>
+<p>India has hundreds of central schemes across education, agriculture, health, employment and welfare. Many citizens never find out which ones they qualify for. Enter your details and this system shows the sample schemes you appear to qualify for, <strong>why</strong>, what they are worth, whether they can be <strong>combined</strong>, and where to apply officially.</p>
+
+<div class="box warn"><strong>Please note:</strong> results are described only as <em>&ldquo;Eligible based on the information provided&rdquo;</em> or <em>&ldquo;Potentially eligible; verify with the official authority&rdquo;</em>. The system never guarantees eligibility.</div>
+
+<h2>Choose a domain</h2>
+<div class="tiles" id="tiles"><p class="message">Loading domains...</p></div>
+
+<h2>How it works</h2>
+<ol>
+  <li>Select a policy domain and enter your personal and socioeconomic details.</li>
+  <li>The system checks the published criteria of every scheme and explains each pass, fail or unknown.</li>
+  <li>It compares the estimated benefits of the schemes open to you.</li>
+  <li>It checks the restrictions between schemes and recommends the best valid combination for your preference.</li>
+  <li>Every scheme links to its official government source.</li>
+</ol>
+<p>
+  <a class="btn go" href="check.html">Start eligibility check</a>
+  <a class="btn plain" href="schemes.html">Browse scheme directory</a>
+</p>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>Disclaimer:</strong> Results are indicative. They depend only on the information you enter and on a small curated sample of schemes, and they are not a guarantee of eligibility or benefit. Criteria and amounts change, so confirm with the official authority using the link shown for each scheme.</p>
+    <p>Your answers are used only to produce the result. They are not stored; only the domain name and the result counts are saved in a log file.</p>
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

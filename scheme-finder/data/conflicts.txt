@@ -1,0 +1,59 @@
+conflict exclusive conservative
+reason = A student can hold only one central scholarship at a time (stated explicitly in AICTE Pragati / Saksham and UGC scheme guidelines; followed on the National Scholarship Portal).
+source = https://scholarships.gov.in/
+group = pms_sc pms_st csss aicte_pragati aicte_saksham nmmss inspire_she
+
+conflict exclusive official
+reason = A student availing any other central / state scholarship, fee reimbursement or interest subvention is not eligible for CSIS / PM-Vidyalaxmi interest subvention.
+source = https://pmvidyalaxmi.co.in/
+cross = csis pm_vidyalaxmi | pms_sc pms_st csss aicte_pragati aicte_saksham nmmss inspire_she
+
+conflict exclusive official
+reason = Both are interest-subvention schemes; a student availing another interest subvention scheme is not eligible.
+source = https://pmvidyalaxmi.co.in/
+pairs = csis pm_vidyalaxmi
+
+conflict exclusive official
+reason = Farmers already covered under PM-SYM (or NPS / ESIC / EPFO) cannot enrol in PM-KMY.
+source = https://maandhan.in/
+pairs = pm_kmy pm_sym
+
+conflict exclusive conservative
+reason = APY is run on the NPS architecture and PM-SYM excludes NPS members; treated as overlapping until confirmed.
+source = https://maandhan.in/
+pairs = pm_sym apy
+
+conflict exclusive official
+reason = PM Vishwakarma requires that you have not taken a similar government self-employment loan (PMEGP, Mudra, PM SVANidhi) in the past 5 years, except fully repaid Mudra / SVANidhi loans.
+source = https://pmvishwakarma.gov.in/
+cross = pm_vishwakarma | pmegp mudra pm_svanidhi
+
+conflict exclusive conservative
+reason = PMEGP does not cover units that already received another government subsidy; PMFME is a capital-subsidy scheme for the same kind of unit.
+source = https://www.kviconline.gov.in/pmegpeportal/
+pairs = pmegp pmfme
+
+conflict note conservative
+reason = Both can be received, but cash already received under JSY may be adjusted against PMMVY. Confirm the net amount with the Anganwadi / health worker.
+source = https://pmmvy.wcd.gov.in/
+pairs = jsy pmmvy
+
+conflict note conservative
+reason = Not mutually exclusive: families in PM-JAY get a top-up cover for members aged 70+. Confirm the combined cover on the beneficiary portal.
+source = https://beneficiary.nha.gov.in/
+pairs = pmjay pmjay_vvy
+
+conflict exclusive conservative
+reason = A family gets one central housing assistance under PMAY-Urban 2.0; the verticals (own-land construction vs interest subsidy) are alternatives.
+source = https://pmay-urban.gov.in/
+pairs = pmay_u_blc pmay_u_iss
+
+conflict exclusive conservative
+reason = PMAY-G already provides toilet support through convergence with SBM-G; the toilet incentive cannot be claimed twice.
+source = https://pmayg.nic.in/
+pairs = pmay_g sbm_g
+
+conflict exclusive conservative
+reason = Treated as one pension per person under NSAP in this prototype; confirm with the District Social Welfare Office.
+source = https://nsap.nic.in/
+group = nsap_ignoaps nsap_ignwps nsap_igndps

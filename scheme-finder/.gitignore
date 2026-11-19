@@ -1,0 +1,6 @@
+build/
+scheme_finder
+scheme_finder.exe
+test_engine
+test_engine.exe
+data/usage.dat

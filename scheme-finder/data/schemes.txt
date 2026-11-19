@@ -1,0 +1,1336 @@
+scheme pm_kisan
+name = Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)
+short = PM-KISAN
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Income support to landholding farmer families.
+benefit_text = Rs 6,000 per year in three instalments of Rs 2,000, paid by direct benefit transfer.
+link = https://pmkisan.gov.in/
+how = Online: open the portal, go to Farmers Corner and choose New Farmer Registration (Aadhaar and land details needed). You can also register at a Common Service Centre or the local agriculture office.
+documents = Aadhaar | Land records | Bank account
+notes = One benefit per family. e-KYC and land-seeding are required for payments.
+checked = 2026-10
+rules =
+    in land_status owner "Owns cultivable land in land records"
+    bool income_tax_payer no "Not an income tax payer"
+    bool govt_employee_self no "Not in regular government / PSU service"
+    bool monthly_pension_10k no "Does not get a monthly pension of Rs 10,000 or more"
+    bool high_office no "Not a holder of high constitutional / elected office"
+benefit =
+    fixed annual=6000 years=99 "Rs 6,000 per year (3 x Rs 2,000)"
+
+scheme pmfby
+name = Pradhan Mantri Fasal Bima Yojana (PMFBY)
+short = PM Fasal Bima Yojana
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Crop insurance against yield loss from natural calamities, pests and diseases.
+benefit_text = Insurance for notified crops at farmer premium of 2% (Kharif), 1.5% (Rabi) and 5% (commercial / horticulture crops).
+link = https://pmfby.gov.in/
+apply = https://pmfby.gov.in/farmerRegistrationForm
+how = Register on the PMFBY portal, or enrol through your bank, a Common Service Centre or an insurance company agent before the cut-off date for your crop.
+documents = Aadhaar | Land / tenancy record | Bank account | Sowing declaration
+notes = Sum insured depends on the scale of finance of the notified crop, so no rupee estimate is made.
+checked = 2026-10
+rules =
+    in land_status owner,tenant "Cultivates land as owner / tenant / sharecropper"
+    bool grows_crops yes "Grows a notified crop in a notified area"
+benefit =
+    service "Crop-loss insurance cover; sum insured is fixed per crop and district (not estimated here)"
+
+scheme kcc_miss
+name = Kisan Credit Card with Modified Interest Subvention
+short = Kisan Credit Card (KCC)
+ministry = Department of Financial Services / Agriculture
+domains = agriculture
+description = Short-term crop credit at concessional interest.
+benefit_text = Loans at 7% p.a. with a further 3% prompt-repayment incentive (effective 4%).
+link = https://agriwelfare.gov.in/
+how = Apply at your bank branch (commercial, cooperative or regional rural bank) with land records and ID proof.
+documents = Aadhaar | Land / tenancy record | Photographs | Bank application
+notes = Loan limits under the subvention have been revised (Rs 3 lakh to Rs 5 lakh announced) - confirm the current cap.
+checked = 2026-10
+rules =
+    any "Farmer: owner / tenant cultivator or fisher" (
+        in land_status owner,tenant "Owner / tenant cultivator"
+        in occupation fisher "Fisher"
+    )
+    num age >= 18 "Age 18 years or more"
+    num age <= 75 "Age 75 years or less"
+benefit =
+    interest field=crop_loan_amount recurring=1 cap=300000 pct=3 "3% prompt-repayment incentive on a crop loan up to Rs 3 lakh, each year you repay on time (lender also receives interest subvention)."
+
+scheme pm_kusum
+name = PM-KUSUM (Solar Pumps for Farmers)
+short = PM-KUSUM Solar Pump
+ministry = Ministry of New and Renewable Energy
+domains = agriculture
+description = Subsidy to install standalone solar agricultural pumps.
+benefit_text = Central financial assistance of 30% of benchmark cost (state subsidy extra in many states).
+link = https://pmkusum.mnre.gov.in/
+how = Applications go through your state nodal agency or electricity distribution company; the portal lists the contact for each state.
+documents = Aadhaar | Land record | Bank account
+notes = Applications run through state nodal agencies.
+checked = 2026-10
+selection_based = yes
+rules =
+    in land_status owner,tenant "Farmer with land (owned or leased)"
+    num solar_pump_cost > 0 "Plans to install a solar irrigation pump"
+benefit =
+    percent field=solar_pump_cost pct=30  mode=one_time "30% central financial assistance on the pump cost (state share not counted)."
+
+scheme soil_health_card
+name = Soil Health Card Scheme
+short = Soil Health Card
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Free soil testing with crop-wise nutrient recommendations.
+benefit_text = Soil Health Card every two years with fertiliser recommendations.
+link = https://soilhealth.dac.gov.in/
+how = No application form: soil samples are collected through the state agriculture department. Ask your local agriculture office.
+documents = Land details
+checked = 2026-10
+rules =
+    in land_status owner,tenant "Cultivates agricultural land"
+benefit =
+    service "Free soil testing and Soil Health Card"
+
+scheme pm_kmy
+name = Pradhan Mantri Kisan Maandhan Yojana (PM-KMY)
+short = PM Kisan Maandhan Pension
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Voluntary contributory pension for small and marginal farmers.
+benefit_text = Rs 3,000 per month pension after age 60 with matching contribution by the Centre.
+link = https://maandhan.in/
+how = Enrol at the nearest Common Service Centre with Aadhaar and a bank or savings account.
+documents = Aadhaar | Land records | Bank account
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    num age <= 40 "Age 40 years or less"
+    in land_status owner "Owns cultivable land"
+    num land_hectares <= 2 "Cultivable land up to 2 hectares"
+    bool covered_other_pension no "Not covered under NPS / ESIC / EPFO / PM-SYM"
+    bool income_tax_payer no "Not an income tax payer"
+benefit =
+    fixed future_pension_monthly=3000 "Rs 3,000 per month pension from age 60 (you contribute Rs 55-200 per month depending on entry age)."
+
+scheme aif
+name = Agriculture Infrastructure Fund (AIF)
+short = Agriculture Infrastructure Fund
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Medium-long term loans for post-harvest and community farming assets.
+benefit_text = 3% p.a. interest subvention on loans up to Rs 2 crore for up to 7 years, with credit guarantee.
+link = https://agriinfra.dac.gov.in/
+how = Apply for the loan through the scheme portal; a participating bank sanctions it.
+documents = Project report | Land / business proof | Bank loan application
+checked = 2026-10
+rules =
+    any "Farmer / agri-entrepreneur" (
+        in land_status owner,tenant "Farmer"
+        in occupation farmer,self_employed "Farmer / self-employed"
+    )
+    num agri_infra_loan > 0 "Plans an agri-infrastructure project financed by a loan"
+benefit =
+    interest field=agri_infra_loan cap=20000000 pct=3 years=7 factor=0.6 "3% x loan (max Rs 2 crore) x 7 years, scaled by 0.6 to reflect a falling loan balance (approximation)."
+
+scheme pkvy
+name = Paramparagat Krishi Vikas Yojana (PKVY)
+short = Paramparagat Krishi Vikas Yojana
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Cluster-based support for organic farming.
+benefit_text = About Rs 31,000 per hectare over 3 years (direct benefit transfer) for organic inputs.
+link = https://pgsindia-ncof.gov.in/
+how = Join or form a farmer group (cluster) through your state agriculture department.
+documents = Aadhaar | Land record | Cluster membership
+checked = 2026-10
+selection_based = yes
+rules =
+    in land_status owner,tenant "Cultivates land"
+    bool organic_interest yes "Willing to join an organic farming cluster"
+benefit =
+    perunit field=land_hectares rate=10333 cap_units=2 years=3 mode=annual "Rs 31,000 per hectare spread over 3 years, counted for up to 2 hectares (prototype assumption - verify limit)."
+
+scheme smam
+name = Sub-Mission on Agricultural Mechanization (SMAM)
+short = Farm Mechanization Subsidy
+ministry = Department of Agriculture and Farmers Welfare
+domains = agriculture
+description = Subsidy on purchase of farm machinery.
+benefit_text = 40% subsidy on machinery cost; 50% for SC/ST, women and small / marginal farmers.
+link = https://agrimachinery.nic.in/
+how = Register on the scheme portal or contact your state agriculture department; the subsidy is released after you buy approved machinery.
+documents = Aadhaar | Land record | Machine quotation | Bank account
+checked = 2026-10
+selection_based = yes
+rules =
+    in land_status owner,tenant "Cultivates land"
+    num machinery_cost > 0 "Plans to buy farm machinery"
+benefit =
+    tiered (
+        tier (
+            any "SC/ST, woman or small/marginal farmer" (
+                in category sc,st "SC/ST"
+                in gender female "Woman"
+                num land_hectares <= 2 "Up to 2 ha"
+            )
+        )
+        percent field=machinery_cost pct=50  mode=one_time "50% of machinery cost (per-machine ceilings in guidelines are not modelled)."
+        default
+        percent field=machinery_cost pct=40  mode=one_time "40% of machinery cost (per-machine ceilings in guidelines are not modelled)."
+    )
+
+scheme pmmsy
+name = Pradhan Mantri Matsya Sampada Yojana (PMMSY)
+short = PM Matsya Sampada Yojana
+ministry = Department of Fisheries
+domains = agriculture
+description = Support for fishers and fish farmers.
+benefit_text = Subsidy of 40% of unit cost (60% for SC/ST and women).
+link = https://pmmsy.dof.gov.in/
+how = Apply through your state or UT fisheries department; the portal explains the process.
+documents = Aadhaar | Fisher ID / licence | Project report
+checked = 2026-10
+selection_based = yes
+rules =
+    in occupation fisher "Fisher / fish farmer"
+    num fisheries_project_cost > 0 "Plans a fisheries project / unit"
+benefit =
+    tiered (
+        tier (
+            any "SC/ST or woman" (
+                in category sc,st "SC/ST"
+                in gender female "Woman"
+            )
+        )
+        percent field=fisheries_project_cost pct=60  mode=one_time "60% of project cost (unit-cost norms apply)."
+        default
+        percent field=fisheries_project_cost pct=40  mode=one_time "40% of project cost (unit-cost norms apply)."
+    )
+
+scheme pm_sym
+name = Pradhan Mantri Shram Yogi Maan-dhan (PM-SYM)
+short = PM-SYM Pension
+ministry = Ministry of Labour and Employment
+domains = agriculture social
+description = Voluntary contributory pension scheme for unorganised workers (including agricultural labourers).
+benefit_text = Assured pension of Rs 3,000 per month after age 60; Centre matches your monthly contribution.
+link = https://maandhan.in/
+how = Enrol at the nearest Common Service Centre with Aadhaar and a bank or savings account.
+documents = Aadhaar | Savings bank account / Jan Dhan account | Mobile number
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    num age <= 40 "Age 40 years or less"
+    bool unorganised_worker yes "Works in the unorganised sector"
+    num monthly_income <= 15000 "Monthly income up to Rs 15,000"
+    bool covered_other_pension no "Not covered under NPS / ESIC / EPFO"
+    bool income_tax_payer no "Not an income tax payer"
+benefit =
+    fixed future_pension_monthly=3000 "Rs 3,000 per month assured pension from age 60 (you contribute Rs 55-200 per month depending on entry age)."
+
+scheme pms_sc
+name = Post Matric Scholarship for Scheduled Caste Students
+short = Post-Matric Scholarship (SC)
+ministry = Ministry of Social Justice and Empowerment
+domains = education
+description = Financial assistance to SC students studying at post-matriculation level (Class 11 onwards).
+benefit_text = Maintenance allowance by course group (Rs 230-1,200 per month for 10 months) plus reimbursement of compulsory non-refundable fees.
+link = https://scholarships.gov.in/All-Scholarships
+apply = https://scholarships.gov.in/otrapplication/#/
+how = Apply online on the National Scholarship Portal: first create your One Time Registration (OTR), then log in and fill the application while the window is open. Your institution verifies it.
+documents = Caste certificate | Income certificate | Previous marksheet | Bank account (Aadhaar-seeded) | Admission proof / fee receipt
+notes = Rates in this prototype follow the published group-wise maintenance allowance; states may vary or add to them.
+status_note = Income ceiling is revised periodically - verify on the portal.
+checked = 2026-10
+rules =
+    in category sc "Belongs to a Scheduled Caste"
+    in study_level school_11_12,diploma,ug,pg "Studying at post-matric level (Class 11 / diploma / degree / postgraduate)"
+    num annual_income <= 250000 "Family annual income up to Rs 2,50,000"
+benefit =
+    composite "Maintenance allowance (10 months) + reimbursement of compulsory non-refundable fees (only counted if you enter your annual fees). Group-wise rates per scheme guidelines; verify current rates." (
+        tiered (
+            tier (
+                in study_level ug,pg ""
+                in course_stream technical_professional ""
+                bool hosteller yes ""
+            )
+            fixed annual=12000 years=99 "Maintenance allowance Group I (hosteller): Rs 1200/month x 10 months"
+            tier (
+                in study_level ug,pg ""
+                in course_stream technical_professional ""
+            )
+            fixed annual=5500 years=99 "Maintenance allowance Group I (day scholar): Rs 550/month x 10 months"
+            tier (
+                in study_level pg ""
+                bool hosteller yes ""
+            )
+            fixed annual=8200 years=99 "Maintenance allowance Group II (hosteller): Rs 820/month x 10 months"
+            tier (
+                in study_level pg ""
+            )
+            fixed annual=5300 years=99 "Maintenance allowance Group II (day scholar): Rs 530/month x 10 months"
+            tier (
+                in study_level ug ""
+                bool hosteller yes ""
+            )
+            fixed annual=5700 years=99 "Maintenance allowance Group III (hosteller): Rs 570/month x 10 months"
+            tier (
+                in study_level ug ""
+            )
+            fixed annual=3000 years=99 "Maintenance allowance Group III (day scholar): Rs 300/month x 10 months"
+            default
+            tiered (
+                tier (
+                    bool hosteller yes ""
+                )
+                fixed annual=3800 years=99 "Maintenance allowance Group IV (hosteller): Rs 380/month x 10 months"
+                default
+                fixed annual=2300 years=99 "Maintenance allowance Group IV (day scholar): Rs 230/month x 10 months"
+            )
+        )
+        percent field=annual_fees pct=100  mode=annual "Compulsory fee reimbursement"
+    )
+
+scheme pms_st
+name = Post Matric Scholarship for Scheduled Tribe Students
+short = Post-Matric Scholarship (ST)
+ministry = Ministry of Tribal Affairs
+domains = education
+description = Financial assistance to ST students studying at post-matriculation level.
+benefit_text = Maintenance allowance by course group plus reimbursement of compulsory non-refundable fees.
+link = https://scholarships.gov.in/All-Scholarships
+apply = https://scholarships.gov.in/otrapplication/#/
+how = Apply online on the National Scholarship Portal: first create your One Time Registration (OTR), then log in and fill the application while the window is open. Your institution verifies it.
+documents = Tribe certificate | Income certificate | Previous marksheet | Bank account | Admission proof / fee receipt
+status_note = Income ceiling is revised periodically - verify on the portal.
+checked = 2026-10
+rules =
+    in category st "Belongs to a Scheduled Tribe"
+    in study_level school_11_12,diploma,ug,pg "Studying at post-matric level (Class 11 / diploma / degree / postgraduate)"
+    num annual_income <= 250000 "Family annual income up to Rs 2,50,000"
+benefit =
+    composite "Maintenance allowance (10 months) + reimbursement of compulsory non-refundable fees (only counted if you enter your annual fees). Group-wise rates per scheme guidelines; verify current rates." (
+        tiered (
+            tier (
+                in study_level ug,pg ""
+                in course_stream technical_professional ""
+                bool hosteller yes ""
+            )
+            fixed annual=12000 years=99 "Maintenance allowance Group I (hosteller): Rs 1200/month x 10 months"
+            tier (
+                in study_level ug,pg ""
+                in course_stream technical_professional ""
+            )
+            fixed annual=5500 years=99 "Maintenance allowance Group I (day scholar): Rs 550/month x 10 months"
+            tier (
+                in study_level pg ""
+                bool hosteller yes ""
+            )
+            fixed annual=8200 years=99 "Maintenance allowance Group II (hosteller): Rs 820/month x 10 months"
+            tier (
+                in study_level pg ""
+            )
+            fixed annual=5300 years=99 "Maintenance allowance Group II (day scholar): Rs 530/month x 10 months"
+            tier (
+                in study_level ug ""
+                bool hosteller yes ""
+            )
+            fixed annual=5700 years=99 "Maintenance allowance Group III (hosteller): Rs 570/month x 10 months"
+            tier (
+                in study_level ug ""
+            )
+            fixed annual=3000 years=99 "Maintenance allowance Group III (day scholar): Rs 300/month x 10 months"
+            default
+            tiered (
+                tier (
+                    bool hosteller yes ""
+                )
+                fixed annual=3800 years=99 "Maintenance allowance Group IV (hosteller): Rs 380/month x 10 months"
+                default
+                fixed annual=2300 years=99 "Maintenance allowance Group IV (day scholar): Rs 230/month x 10 months"
+            )
+        )
+        percent field=annual_fees pct=100  mode=annual "Compulsory fee reimbursement"
+    )
+
+scheme csss
+name = Central Sector Scheme of Scholarship for College and University Students
+short = CSS Scholarship (College/University)
+ministry = Department of Higher Education, Ministry of Education
+domains = education
+description = Merit-based scholarship for regular degree students from families with limited income.
+benefit_text = Rs 12,000 per year at undergraduate level; Rs 20,000 per year at postgraduate level.
+link = https://scholarships.gov.in/All-Scholarships
+apply = https://scholarships.gov.in/otrapplication/#/
+how = Apply online on the National Scholarship Portal: first create your One Time Registration (OTR), then log in and fill the application while the window is open. Your institution verifies it.
+documents = Class 12 marksheet | Income certificate | Bank account | Admission proof
+checked = 2026-10
+selection_based = yes
+rules =
+    in study_level ug,pg "Pursuing a regular undergraduate / postgraduate course"
+    num class12_percentile >= 80 "Above the 80th percentile in Class 12 in your stream"
+    num annual_income <= 450000 "Family annual income up to Rs 4,50,000"
+benefit =
+    tiered (
+        tier (
+            in study_level pg ""
+        )
+        fixed annual=20000 years=2 "Rs 20,000 per year at postgraduate level"
+        default
+        fixed annual=12000 years=3 "Rs 12,000 per year at undergraduate level"
+    )
+
+scheme aicte_pragati
+name = AICTE Pragati Scholarship for Girl Students
+short = AICTE Pragati (Girls)
+ministry = All India Council for Technical Education
+domains = education
+description = Scholarship for girls admitted to AICTE-approved technical diploma/degree courses.
+benefit_text = Rs 50,000 per year (tuition fee up to Rs 30,000 + Rs 2,000 per month for 10 months).
+link = https://www.aicte-india.org/schemes/students-development-schemes
+apply = https://scholarships.gov.in/otrapplication/#/
+how = AICTE scholarships are applied for on the National Scholarship Portal (OTR registration, then application) when AICTE opens the window; see the AICTE page for the notice.
+documents = Admission proof | Income certificate | Class 10/12 marksheets | Bank account
+notes = Only up to two girl children per family are covered.
+checked = 2026-10
+selection_based = yes
+rules =
+    in gender female "Girl student"
+    in study_level diploma,ug "Admitted to a diploma / degree course"
+    in course_stream technical_professional "Technical course in an AICTE-approved institution"
+    num annual_income <= 800000 "Family annual income up to Rs 8,00,000"
+benefit =
+    fixed annual=50000 years=4 "Rs 50,000 per year for the duration of the course"
+
+scheme aicte_saksham
+name = AICTE Saksham Scholarship for Specially Abled Students
+short = AICTE Saksham (Disability)
+ministry = All India Council for Technical Education
+domains = education
+description = Scholarship for students with 40% or more disability in AICTE-approved technical courses.
+benefit_text = Rs 50,000 per year (tuition fee up to Rs 30,000 + Rs 2,000 per month for 10 months).
+link = https://www.aicte-india.org/schemes/students-development-schemes
+apply = https://scholarships.gov.in/otrapplication/#/
+how = AICTE scholarships are applied for on the National Scholarship Portal (OTR registration, then application) when AICTE opens the window; see the AICTE page for the notice.
+documents = Disability certificate | Admission proof | Income certificate | Bank account
+checked = 2026-10
+selection_based = yes
+rules =
+    num disability_pct >= 40 "Disability of 40% or more"
+    in study_level diploma,ug "Admitted to a diploma / degree course"
+    in course_stream technical_professional "Technical course in an AICTE-approved institution"
+    num annual_income <= 800000 "Family annual income up to Rs 8,00,000"
+benefit =
+    fixed annual=50000 years=4 "Rs 50,000 per year for the duration of the course"
+
+scheme nmmss
+name = National Means-cum-Merit Scholarship Scheme
+short = NMMSS (Class 9-12)
+ministry = Department of School Education and Literacy, Ministry of Education
+domains = education
+description = Scholarship to prevent drop-out of meritorious students from economically weaker sections after Class 8.
+benefit_text = Rs 12,000 per year (Rs 1,000 per month) for Classes 9-12.
+link = https://scholarships.gov.in/All-Scholarships
+apply = https://scholarships.gov.in/otrapplication/#/
+how = Apply online on the National Scholarship Portal: first create your One Time Registration (OTR), then log in and fill the application while the window is open. Your institution verifies it.
+documents = Income certificate | Marksheet | School certificate | Bank account
+notes = Awarded through a state-level selection test.
+checked = 2026-10
+selection_based = yes
+rules =
+    in study_level school_9_10,school_11_12 "Studying in Class 9-12"
+    in institution_type govt_aided "Studying in a government / aided / local-body school"
+    num annual_income <= 350000 "Parental income up to Rs 3,50,000"
+    any "At least 55% in previous exam (50% for SC/ST)" (
+        num last_exam_percent >= 55 "55% or more"
+        all "SC/ST with 50% or more" (
+            in category sc,st "SC / ST"
+            num last_exam_percent >= 50 "50% or more"
+        )
+    )
+benefit =
+    fixed annual=12000 years=4 "Rs 12,000 per year while in Classes 9-12"
+
+scheme inspire_she
+name = INSPIRE Scholarship for Higher Education (SHE)
+short = INSPIRE-SHE
+ministry = Department of Science and Technology
+domains = education
+description = Scholarship for top Class 12 performers who take up basic / natural science degrees.
+benefit_text = Rs 80,000 per year (Rs 60,000 scholarship + Rs 20,000 mentorship grant).
+link = https://online-inspire.gov.in/
+how = Apply online on the INSPIRE portal when the call for applications opens.
+documents = Class 12 marksheet / board topper proof | Admission proof | Bank account
+checked = 2026-10
+list_based = yes
+rules =
+    num age >= 17 "Age 17 years or more"
+    num age <= 22 "Age 22 years or less"
+    in study_level ug,pg "Pursuing B.Sc / integrated M.Sc"
+    in course_stream basic_science "Basic / natural science course"
+    num class12_percentile >= 99 "Within the top 1% in Class 12 board exam"
+benefit =
+    fixed annual=80000 years=5 "Rs 80,000 per year for up to 5 years"
+
+scheme csis
+name = PM-USP Central Sector Interest Subsidy (CSIS)
+short = Education Loan Interest Subsidy (CSIS)
+ministry = Department of Higher Education, Ministry of Education
+domains = education
+description = Full interest subsidy during the moratorium on education loans for technical / professional courses.
+benefit_text = Interest on education loans up to Rs 10 lakh is paid by the government during the course + 1 year.
+link = https://pmvidyalaxmi.co.in/
+how = Apply through the PM-Vidyalaxmi portal, which sends one common application to participating banks.
+documents = Income certificate | Admission letter | Loan sanction letter
+notes = Student availing any other scholarship / interest subvention / fee reimbursement is not eligible.
+checked = 2026-10
+rules =
+    in study_level ug,pg "Pursuing a degree course"
+    in course_stream technical_professional "Technical / professional course at an approved institution"
+    num annual_income <= 450000 "Family annual income up to Rs 4,50,000"
+    bool other_scholarship no "Not receiving any other government scholarship, fee reimbursement or interest subvention"
+    num edu_loan_amount > 0 "Takes / has an education loan"
+benefit =
+    interest field=edu_loan_amount years_field=course_duration_years cap=1000000 pct=9 extra_years=1 "Estimate = loan (max Rs 10 lakh) x assumed 9% p.a. interest x (course years + 1 year moratorium); upper-end estimate because loans are disbursed in stages."
+
+scheme pm_vidyalaxmi
+name = PM-Vidyalaxmi (3% Interest Subvention and Credit Guarantee)
+short = PM-Vidyalaxmi
+ministry = Department of Higher Education, Ministry of Education
+domains = education
+description = Collateral-free education loans for admitted students of top institutions, with 3% interest subvention.
+benefit_text = 3% interest subvention during moratorium on loans up to Rs 10 lakh (family income up to Rs 8 lakh); 75% credit guarantee on loans up to Rs 7.5 lakh.
+link = https://pmvidyalaxmi.co.in/
+how = Apply through the PM-Vidyalaxmi portal, which sends one common application to participating banks.
+documents = Income certificate | Admission letter | Aadhaar | Loan application on PM-Vidyalaxmi portal
+notes = Limited to one lakh students per year.
+checked = 2026-10
+selection_based = yes
+rules =
+    in study_level ug,pg "Pursuing a degree course"
+    bool qheis yes "Admitted to a Quality Higher Education Institution (QHEI)"
+    num annual_income <= 800000 "Family annual income up to Rs 8,00,000"
+    bool other_scholarship no "Not receiving any other government scholarship, fee reimbursement or interest subvention"
+    num edu_loan_amount > 0 "Takes an education loan"
+benefit =
+    interest field=edu_loan_amount years_field=course_duration_years cap=1000000 pct=3 extra_years=1 "Estimate = loan (max Rs 10 lakh) x 3% x (course years + 1 year moratorium); upper-end estimate."
+
+scheme kgbv
+name = Kasturba Gandhi Balika Vidyalaya (KGBV)
+short = Kasturba Gandhi Balika Vidyalaya
+ministry = Department of School Education and Literacy, Ministry of Education
+domains = education
+description = Residential schools for girls from disadvantaged groups in educationally backward areas.
+benefit_text = Free residential schooling with food, accommodation and learning material.
+link = https://dsel.education.gov.in/
+how = No central application: admission is through the district or state education authority.
+documents = Age proof | Category / BPL certificate
+notes = Seats are limited and located in notified educationally backward blocks.
+checked = 2026-10
+list_based = yes
+rules =
+    in gender female "Girl student"
+    num age >= 10 "Age 10 years or more"
+    num age <= 18 "Age 18 years or less"
+    in area rural "Lives in a rural area"
+    any "From SC / ST / OBC / minority community or BPL household" (
+        in category sc,st,obc "SC / ST / OBC"
+        bool minority yes "Minority community"
+        bool bpl yes "BPL household"
+    )
+benefit =
+    service "Free residential schooling (accommodation, meals, uniform and books)"
+
+scheme pm_poshan
+name = PM POSHAN (Mid-Day Meal)
+short = PM POSHAN (Mid-Day Meal)
+ministry = Department of School Education and Literacy, Ministry of Education
+domains = education
+description = Hot cooked meal for children in government and aided schools.
+benefit_text = One hot cooked meal every school day for children in Classes 1-8.
+link = https://pmposhan.education.gov.in/
+how = No application: eligible children get the meal at their school.
+documents = Enrolment in school
+checked = 2026-10
+rules =
+    in study_level school_1_8 "Studying in Class 1-8"
+    in institution_type govt_aided "Government / aided / local-body school"
+benefit =
+    service "Free hot cooked mid-day meal on school days"
+
+scheme pmegp
+name = Prime Minister's Employment Generation Programme (PMEGP)
+short = PMEGP
+ministry = Ministry of MSME (KVIC)
+domains = employment
+description = Credit-linked subsidy to set up new micro-enterprises.
+benefit_text = Margin-money subsidy of 15-35% of project cost (higher for special categories and rural areas).
+link = https://www.kviconline.gov.in/pmegpeportal/
+how = Apply online on the PMEGP e-portal; the bank then processes the loan and the subsidy is paid after the loan is released.
+documents = Aadhaar | Project report | Education certificate | Caste / special category proof
+notes = Existing units and units that already received any government subsidy are not eligible.
+checked = 2026-10
+selection_based = yes
+rules =
+    num age >= 18 "Age 18 years or more"
+    in business_stage new "Setting up a new unit"
+    bool prior_pmegp_subsidy no "No earlier PMEGP / government subsidy for this unit"
+    in sector manufacturing,service "Manufacturing or service activity (trading is not covered)"
+    any "Project cost within PMEGP limits (Rs 50 lakh manufacturing / Rs 20 lakh service)" (
+        all "Manufacturing up to Rs 50 lakh" (
+            in sector manufacturing "Manufacturing"
+            num project_cost <= 5000000 "Up to Rs 50 lakh"
+        )
+        all "Service up to Rs 20 lakh" (
+            in sector service "Service"
+            num project_cost <= 2000000 "Up to Rs 20 lakh"
+        )
+    )
+    any "Education: Class 8 pass needed for larger projects (above Rs 10 lakh manufacturing / Rs 5 lakh service)" (
+        all "Small manufacturing project" (
+            in sector manufacturing "Manufacturing"
+            num project_cost <= 1000000 "Up to Rs 10 lakh"
+        )
+        all "Small service project" (
+            in sector service "Service"
+            num project_cost <= 500000 "Up to Rs 5 lakh"
+        )
+        in qualification 8_pass,10_pass,12_pass,graduate,postgraduate "Class 8 pass or higher"
+    )
+benefit =
+    tiered (
+        tier (
+            any "Special category (SC / ST / OBC / woman / disabled / minority / North-East)" (
+                in category sc,st,obc "SC/ST/OBC"
+                in gender female "Woman"
+                num disability_pct >= 40 "Disabled"
+                bool minority yes "Minority"
+                in state arunachal_pradesh,assam,manipur,meghalaya,mizoram,nagaland,sikkim,tripura "North-Eastern state"
+            )
+            in area rural ""
+        )
+        percent field=project_cost pct=35  mode=one_time "Special category, rural: 35% of project cost as margin-money subsidy."
+        tier (
+            any "Special category (SC / ST / OBC / woman / disabled / minority / North-East)" (
+                in category sc,st,obc "SC/ST/OBC"
+                in gender female "Woman"
+                num disability_pct >= 40 "Disabled"
+                bool minority yes "Minority"
+                in state arunachal_pradesh,assam,manipur,meghalaya,mizoram,nagaland,sikkim,tripura "North-Eastern state"
+            )
+        )
+        percent field=project_cost pct=25  mode=one_time "Special category, urban: 25% of project cost as margin-money subsidy."
+        tier (
+            in area rural ""
+        )
+        percent field=project_cost pct=25  mode=one_time "General category, rural: 25% of project cost as margin-money subsidy."
+        default
+        percent field=project_cost pct=15  mode=one_time "General category, urban: 15% of project cost as margin-money subsidy."
+    )
+
+scheme mudra
+name = Pradhan Mantri MUDRA Yojana (PMMY)
+short = PM MUDRA Yojana
+ministry = Department of Financial Services
+domains = employment
+description = Collateral-free loans for non-farm small businesses.
+benefit_text = Shishu up to Rs 50,000; Kishor up to Rs 5 lakh; Tarun up to Rs 10 lakh; Tarun Plus up to Rs 20 lakh.
+link = https://www.mudra.org.in/
+how = Apply at a bank, NBFC or microfinance institution; the Mudra website explains the loan categories.
+documents = Aadhaar | Business plan / proof | Bank KYC
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    in sector manufacturing,service,trading,food_processing,agri_allied "Non-farm income-generating activity"
+    num loan_required > 0 "Needs a business loan"
+    num loan_required <= 2000000 "Loan up to Rs 20 lakh"
+benefit =
+    service "Collateral-free business loan (credit access; no subsidy amount estimated)"
+
+scheme standup_india
+name = Stand-Up India
+short = Stand-Up India
+ministry = Department of Financial Services
+domains = employment
+description = Bank loans for SC / ST and women entrepreneurs setting up a first enterprise.
+benefit_text = Composite loan of Rs 10 lakh to Rs 1 crore for a greenfield enterprise.
+link = https://www.standupmitra.in/
+how = Apply through the Stand-Up Mitra portal or directly at a bank branch.
+documents = Aadhaar | Caste certificate (if SC/ST) | Project report
+checked = 2026-10
+rules =
+    any "SC / ST or woman entrepreneur" (
+        in category sc,st "SC / ST"
+        in gender female "Woman"
+    )
+    num age >= 18 "Age 18 years or more"
+    in business_stage new "First-time (greenfield) enterprise"
+    in sector manufacturing,service,trading,food_processing,agri_allied "Manufacturing, services, trading or agri-allied"
+    num loan_required >= 1000000 "Loan of at least Rs 10 lakh"
+    num loan_required <= 10000000 "Loan up to Rs 1 crore"
+benefit =
+    service "Bank loan of Rs 10 lakh - Rs 1 crore (credit access; no subsidy amount estimated)"
+
+scheme pm_svanidhi
+name = PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)
+short = PM SVANidhi
+ministry = Ministry of Housing and Urban Affairs
+domains = employment
+description = Working-capital loans for street vendors.
+benefit_text = Collateral-free loans of Rs 15,000, then Rs 25,000, then Rs 50,000, with 7% interest subsidy.
+link = https://pmsvanidhi.mohua.gov.in/
+how = Apply on the scheme portal, through a Common Service Centre or through your urban local body.
+documents = Certificate of Vending / Letter of Recommendation | Aadhaar | Bank account
+checked = 2026-10
+list_based = yes
+rules =
+    in occupation street_vendor "Street vendor"
+benefit =
+    interest loan_fixed=15000 pct=7 emi_months=12 loan_rate=10.5 "7% p.a. interest subsidy on a first-tranche loan of Rs 15,000 repaid in 12 EMIs at an assumed 10.5% loan rate (later tranches of Rs 25,000 / Rs 50,000 add more)."
+
+scheme pm_vishwakarma
+name = PM Vishwakarma
+short = PM Vishwakarma
+ministry = Ministry of MSME
+domains = employment
+description = Support for traditional artisans: recognition, training, toolkit and low-interest credit.
+benefit_text = Training stipend Rs 500/day, toolkit voucher Rs 15,000, loans up to Rs 3 lakh at 5%.
+link = https://pmvishwakarma.gov.in/
+how = Register at a Common Service Centre or on the portal; your local body then verifies the application.
+documents = Aadhaar | Trade proof | Bank account
+notes = Only one member per family can benefit.
+checked = 2026-10
+list_based = yes
+rules =
+    in occupation artisan "Artisan in one of the 18 notified traditional trades"
+    num age >= 18 "Age 18 years or more"
+    bool prior_pmegp_subsidy no "Has not taken a PMEGP loan"
+    notin prior_selfemp_loan outstanding "No unpaid Mudra / SVANidhi loan from the last 5 years"
+    bool govt_employee_family no "No family member in government service"
+benefit =
+    fixed one_time=17500 "Toolkit e-voucher Rs 15,000 + basic-training stipend (Rs 500/day x at least 5 days = Rs 2,500). Credit at 5% interest is extra and not valued."
+
+scheme pmfme
+name = PM Formalisation of Micro Food Processing Enterprises (PMFME)
+short = PM FME
+ministry = Ministry of Food Processing Industries
+domains = employment
+description = Support for micro food-processing units.
+benefit_text = 35% credit-linked capital subsidy up to Rs 10 lakh per unit.
+link = https://pmfme.mofpi.gov.in/
+how = Apply on the scheme portal through your state nodal agency or district resource person.
+documents = Aadhaar | Project report | Bank loan sanction
+checked = 2026-10
+selection_based = yes
+rules =
+    num age >= 18 "Age 18 years or more"
+    in sector food_processing "Food-processing unit"
+    num project_cost > 0 "Has a project cost"
+benefit =
+    percent field=project_cost pct=35 cap=1000000 mode=one_time "35% of project cost, capped at Rs 10 lakh."
+
+scheme pm_vbry
+name = PM Viksit Bharat Rozgar Yojana (ELI Scheme)
+short = PM Viksit Bharat Rozgar Yojana
+ministry = Ministry of Labour and Employment
+domains = employment
+description = Incentive for first-time employees in the formal sector.
+benefit_text = One month's EPF wage up to Rs 15,000 in two instalments.
+link = https://pmvbry.labour.gov.in
+how = Employees are covered through the employer's EPFO registration; keep your UAN active as the scheme page explains. Employers register on the portal.
+documents = UAN / EPFO registration | Aadhaar-seeded bank account
+notes = Employees with EPF wage up to Rs 10,000 may get a proportional amount.
+checked = 2026-10
+rules =
+    bool first_job_epfo yes "First-time EPFO-registered employee (joined 1 Aug 2025 - 31 Jul 2027)"
+    num monthly_salary <= 100000 "Monthly wage up to Rs 1 lakh"
+benefit =
+    percent field=monthly_salary pct=100 cap=15000 mode=one_time "One month's EPF wage, up to Rs 15,000, in two instalments (after 6 and 12 months of service + financial literacy module)."
+
+scheme pmkvy
+name = Pradhan Mantri Kaushal Vikas Yojana (Skill India)
+short = PMKVY Skill Training
+ministry = Ministry of Skill Development and Entrepreneurship
+domains = employment
+description = Free short-term skill training with certification.
+benefit_text = Free training, assessment and certification.
+link = https://www.skillindiadigital.gov.in/
+how = Find a training centre and enrol through the Skill India Digital portal.
+documents = Aadhaar | Education proof
+status_note = Confirm the current phase is accepting enrolment.
+checked = 2026-10
+rules =
+    num age >= 15 "Age 15 years or more"
+    num age <= 45 "Age 45 years or less"
+benefit =
+    service "Free skill training and certification"
+
+scheme ddu_gky
+name = Deen Dayal Upadhyaya Grameen Kaushalya Yojana (DDU-GKY)
+short = DDU-GKY
+ministry = Ministry of Rural Development
+domains = employment
+description = Placement-linked skilling for rural poor youth.
+benefit_text = Free residential / non-residential training with placement support.
+link = https://ddugky.gov.in/
+how = Enrol through a training partner or state skill mission centre listed on the portal.
+documents = Aadhaar | BPL / poverty proof
+checked = 2026-10
+list_based = yes
+rules =
+    in area rural "Rural resident"
+    any "Age 15-35 (up to 45 for women, SC/ST, disabled)" (
+        all "Age 15-35" (
+            num age >= 15 "15+"
+            num age <= 35 "35 or less"
+        )
+        all "Age up to 45 in a relaxed group" (
+            num age >= 15 "15+"
+            num age <= 45 "45 or less"
+            any "Woman / SC / ST / disabled" (
+                in gender female "Woman"
+                in category sc,st "SC/ST"
+                num disability_pct >= 40 "Disabled"
+            )
+        )
+    )
+    bool bpl yes "Rural poor (BPL) household"
+benefit =
+    service "Free skill training with placement support"
+
+scheme vb_g_ram_g
+name = Viksit Bharat - G RAM G (rural wage employment guarantee, replaced MGNREGA from 1 July 2026)
+short = VB-G RAM G (Rural Employment)
+ministry = Ministry of Rural Development
+domains = employment
+description = Statutory guarantee of wage employment for rural households.
+benefit_text = 125 days of guaranteed wage employment per household per year for adults who volunteer for unskilled manual work.
+link = https://rural.gov.in/
+how = Rural work is requested through your Gram Panchayat; the Ministry of Rural Development page explains registration and the job card.
+documents = Job card (Gramin Rozgar Guarantee Card) | Aadhaar | Bank account
+notes = Wage rates and state funding may differ.
+status_note = Replaced MGNREGA on 1 July 2026; check state implementation.
+checked = 2026-10
+rules =
+    in area rural "Rural household"
+    num age >= 18 "Adult (18 years or more)"
+benefit =
+    fixed annual=37500 years=99 "Up to 125 days x Rs 300 notified floor wage = Rs 37,500 per year. Work is guaranteed on demand, not a fixed payment - treat as a maximum."
+
+scheme pmjay
+name = Ayushman Bharat - PM Jan Arogya Yojana (PM-JAY)
+short = Ayushman Bharat PM-JAY
+ministry = National Health Authority
+domains = health
+description = Cashless hospital cover for poor and vulnerable families identified through deprivation / occupation criteria.
+benefit_text = Health cover of Rs 5 lakh per family per year for hospitalisation.
+link = https://pmjay.gov.in/
+how = Check your eligibility on the scheme portal, then get the Ayushman card at an empanelled hospital, a Common Service Centre or through the official app.
+documents = Aadhaar | Ration card / family ID | Mobile number
+notes = Several states extend coverage beyond the national criteria.
+checked = 2026-10
+list_based = yes
+rules =
+    any "Household meets a PM-JAY deprivation / occupation criterion (confirmed only through the beneficiary list)" (
+        in category sc,st "SC / ST household"
+        bool kutcha_house yes "Kutcha house"
+        bool landless_manual_labour yes "Landless, manual casual labour"
+        bool female_headed_no_adult_male yes "Female-headed, no adult male"
+        in ration_card aay,phh "AAY / Priority ration card (used by many states)"
+        bool bpl yes "BPL household"
+        in occupation street_vendor,daily_wage,agri_labour,artisan "Listed occupational category (vendor, labourer, artisan)"
+        num disability_pct >= 40 "Disabled member"
+    )
+benefit =
+    fixed cover=500000 "Rs 5 lakh per family per year (cover is shared by the whole family; not cash)."
+
+scheme pmjay_vvy
+name = Ayushman Vay Vandana (PM-JAY for 70+)
+short = Ayushman Vay Vandana (70+)
+ministry = National Health Authority
+domains = health
+description = Free health cover for all senior citizens aged 70 and above, regardless of income.
+benefit_text = Rs 5 lakh per year; families already in PM-JAY get a top-up shared by members aged 70+.
+link = https://beneficiary.nha.gov.in/
+how = Register for the Vay Vandana card on the beneficiary portal (Aadhaar needed) or at an empanelled hospital.
+documents = Aadhaar | Mobile number
+notes = Those covered under CGHS / ECHS / CAPF may need to choose one scheme.
+checked = 2026-10
+rules =
+    num age >= 70 "Age 70 years or more"
+benefit =
+    fixed cover=500000 "Rs 5 lakh per year cover for 70+ members."
+
+scheme jsy
+name = Janani Suraksha Yojana (JSY)
+short = Janani Suraksha Yojana
+ministry = Ministry of Health and Family Welfare
+domains = health
+description = Cash incentive for institutional delivery.
+benefit_text = Rs 700 / 600 (rural / urban) in high-performing states; Rs 1,400 / 1,000 in low-performing states.
+link = https://nhm.gov.in/
+how = Register with your ASHA worker or ANM, or at the nearest government health centre, during pregnancy.
+documents = Mother and Child Protection card | Aadhaar | Bank account | BPL / caste certificate where applicable
+notes = Amounts shown are the national norms; verify against current NHM guidelines.
+status_note = Verify the list of low-performing states and current amounts.
+checked = 2026-10
+rules =
+    in maternity_status pregnant "Pregnant woman"
+    num age >= 19 "Age 19 years or more"
+    bool delivery_institutional yes "Delivery in a government / accredited facility"
+    any "Lives in a low-performing state, or is BPL / SC / ST" (
+        in state uttar_pradesh,uttarakhand,bihar,jharkhand,madhya_pradesh,chhattisgarh,assam,rajasthan,odisha,jammu_and_kashmir "Low-performing state"
+        bool bpl yes "BPL"
+        in category sc,st "SC / ST"
+    )
+benefit =
+    tiered (
+        tier (
+            in state uttar_pradesh,uttarakhand,bihar,jharkhand,madhya_pradesh,chhattisgarh,assam,rajasthan,odisha,jammu_and_kashmir ""
+            in area rural ""
+        )
+        fixed one_time=1400 "Rs 1,400 (rural, low-performing state)"
+        tier (
+            in state uttar_pradesh,uttarakhand,bihar,jharkhand,madhya_pradesh,chhattisgarh,assam,rajasthan,odisha,jammu_and_kashmir ""
+        )
+        fixed one_time=1000 "Rs 1,000 (urban, low-performing state)"
+        tier (
+            in area rural ""
+        )
+        fixed one_time=700 "Rs 700 (rural, other state)"
+        default
+        fixed one_time=600 "Rs 600 (urban, other state)"
+    )
+
+scheme pmmvy
+name = Pradhan Mantri Matru Vandana Yojana (PMMVY)
+short = PM Matru Vandana Yojana
+ministry = Ministry of Women and Child Development
+domains = health
+description = Cash support for pregnant and lactating mothers.
+benefit_text = Rs 5,000 for the first living child; Rs 6,000 for a second child if a girl.
+link = https://pmmvy.wcd.gov.in/
+how = Register at your Anganwadi Centre or health facility, or on the scheme portal.
+documents = Mother and Child Protection card | Aadhaar | Bank account
+notes = Cash already received under JSY may be adjusted against PMMVY.
+checked = 2026-10
+rules =
+    in maternity_status pregnant,lactating "Pregnant or lactating mother"
+    num age >= 19 "Age 19 years or more"
+    in child_order first,second_girl "First living child, or second child if a girl"
+    bool govt_employee_self no "Not in regular government / PSU employment"
+benefit =
+    tiered (
+        tier (
+            in child_order second_girl ""
+        )
+        fixed one_time=6000 "Rs 6,000 for a second girl child"
+        default
+        fixed one_time=5000 "Rs 5,000 for the first living child"
+    )
+
+scheme pmsma
+name = Pradhan Mantri Surakshit Matritva Abhiyan (PMSMA)
+short = PM Surakshit Matritva Abhiyan
+ministry = Ministry of Health and Family Welfare
+domains = health
+description = Free antenatal check-up by a doctor on the 9th of every month.
+benefit_text = Free specialist antenatal care and screening.
+link = https://pmsma.mohfw.gov.in/
+how = No application: free antenatal check-ups are offered at government health facilities on the 9th of every month.
+documents = Government health facility visit
+checked = 2026-10
+rules =
+    in maternity_status pregnant "Pregnant woman"
+benefit =
+    service "Free antenatal check-up and high-risk pregnancy screening"
+
+scheme rbsk
+name = Rashtriya Bal Swasthya Karyakram (RBSK)
+short = Rashtriya Bal Swasthya Karyakram
+ministry = Ministry of Health and Family Welfare
+domains = health
+description = Health screening and free treatment for children.
+benefit_text = Free screening for birth defects, diseases, deficiencies and developmental delays (age 0-18).
+link = https://nhm.gov.in/
+how = No application: health teams screen children at anganwadis and government schools.
+documents = Visit by RBSK team at school / anganwadi
+checked = 2026-10
+rules =
+    num age <= 18 "Age 18 years or less"
+benefit =
+    service "Free screening, early intervention and referral treatment for children"
+
+scheme uip
+name = Universal Immunisation Programme / U-WIN
+short = Universal Immunisation (U-WIN)
+ministry = Ministry of Health and Family Welfare
+domains = health
+description = Free vaccination for children and pregnant women.
+benefit_text = Free vaccines with digital record on U-WIN.
+link = https://nhm.gov.in/
+how = No application: free vaccination at government health centres, anganwadis and outreach sessions.
+documents = Mother and Child Protection card
+checked = 2026-10
+rules =
+    any "Child up to 16 years, or pregnant woman" (
+        num age <= 16 "Age 16 years or less"
+        in maternity_status pregnant "Pregnant"
+    )
+benefit =
+    service "Free vaccination at government facilities"
+
+scheme nikshay_poshan
+name = Ni-kshay Poshan Yojana
+short = Ni-kshay Poshan Yojana
+ministry = Ministry of Health and Family Welfare
+domains = health
+description = Nutritional support for notified TB patients.
+benefit_text = Rs 1,000 per month during treatment through direct benefit transfer.
+link = https://nikshay.in/
+how = The treating health facility enrols notified TB patients; the benefit is paid by direct bank transfer.
+documents = Ni-kshay ID | Bank account
+status_note = Verify the current monthly amount.
+checked = 2026-10
+rules =
+    bool tb_patient yes "Notified TB patient on treatment"
+benefit =
+    fixed one_time=6000 "Rs 1,000 per month; counted for 6 months (minimum treatment period)."
+
+scheme abdm
+name = Ayushman Bharat Digital Mission (ABHA Health ID)
+short = ABHA Health ID (ABDM)
+ministry = National Health Authority
+domains = health
+description = Free digital health account to store health records.
+benefit_text = Free ABHA number and digital health records.
+link = https://abdm.gov.in/
+how = Create your ABHA number on the ABDM portal or in a participating app using Aadhaar or a mobile number.
+documents = Aadhaar or mobile number
+notes = Open to all residents; enrolment is voluntary.
+checked = 2026-10
+benefit =
+    service "Free ABHA health ID and digital health locker"
+
+scheme janaushadhi
+name = Pradhan Mantri Bhartiya Janaushadhi Pariyojana
+short = Jan Aushadhi (Generic Medicines)
+ministry = Department of Pharmaceuticals
+domains = health
+description = Quality generic medicines at low prices.
+benefit_text = Generic medicines priced far below branded equivalents at Jan Aushadhi Kendras.
+link = https://janaushadhi.gov.in/
+how = No application: buy generic medicines at a Jan Aushadhi Kendra; the portal has a store locator.
+documents = Prescription
+notes = Open to all residents.
+checked = 2026-10
+benefit =
+    service "Cheaper generic medicines at Jan Aushadhi Kendras"
+
+scheme pmay_g
+name = Pradhan Mantri Awas Yojana - Gramin (PMAY-G)
+short = PMAY-Gramin
+ministry = Ministry of Rural Development
+domains = social
+description = Financial assistance to houseless and kutcha-house rural families to build a pucca house.
+benefit_text = Rs 1.2 lakh (plains) / Rs 1.3 lakh (hilly and difficult areas) plus convergence benefits.
+link = https://pmayg.nic.in/
+how = Beneficiaries are selected from the official list through the Gram Panchayat; contact your Gram Panchayat or block office.
+documents = Aadhaar | Job card | Bank account
+notes = Convergence benefits (wage days for construction, toilet support) are not valued here.
+checked = 2026-10
+list_based = yes
+rules =
+    in area rural "Rural household"
+    in house_status houseless,kutcha "Houseless or living in a kutcha / dilapidated house"
+    bool owns_vehicle no "No motorised vehicle / mechanised farm equipment / fishing boat"
+    bool govt_employee_family no "No family member in government service"
+    bool income_tax_payer no "Not an income tax payer"
+benefit =
+    tiered (
+        tier (
+            in state arunachal_pradesh,assam,manipur,meghalaya,mizoram,nagaland,sikkim,tripura,himachal_pradesh,uttarakhand,jammu_and_kashmir,ladakh ""
+        )
+        fixed one_time=130000 "Rs 1.3 lakh (hilly / difficult area)"
+        default
+        fixed one_time=120000 "Rs 1.2 lakh (plains)"
+    )
+
+scheme pmay_u_blc
+name = PMAY-Urban 2.0: Beneficiary-Led Construction
+short = PMAY-U 2.0 (Own-land construction)
+ministry = Ministry of Housing and Urban Affairs
+domains = social
+description = Central assistance to EWS urban families to build or enhance a house on their own land.
+benefit_text = Central assistance of Rs 2.5 lakh per house.
+link = https://pmay-urban.gov.in/
+how = Apply through the PMAY-Urban portal, your urban local body or a Common Service Centre.
+documents = Aadhaar | Income certificate | Land ownership proof | Bank account
+notes = A family can avail only one central housing assistance.
+checked = 2026-10
+list_based = yes
+rules =
+    in area urban "Urban household"
+    num annual_income <= 300000 "EWS: family income up to Rs 3,00,000"
+    in house_status houseless,kutcha "No pucca house anywhere in India"
+    bool owns_plot yes "Owns land / plot to build on"
+benefit =
+    fixed one_time=250000 "Central assistance Rs 2.5 lakh per house (state top-up not counted)."
+
+scheme pmay_u_iss
+name = PMAY-Urban 2.0: Interest Subsidy Scheme
+short = PMAY-U 2.0 (Home-loan interest subsidy)
+ministry = Ministry of Housing and Urban Affairs
+domains = social
+description = Interest subsidy on home loans for EWS / LIG / MIG urban families.
+benefit_text = Interest subsidy of up to Rs 1.8 lakh on home loans up to Rs 25 lakh (house value up to Rs 35 lakh).
+link = https://pmay-urban.gov.in/
+how = Apply through the lending bank or housing finance company, or on the PMAY-Urban portal.
+documents = Aadhaar | Income proof | Loan sanction from lending institution
+checked = 2026-10
+rules =
+    in area urban "Urban household"
+    num annual_income <= 900000 "Family income up to Rs 9,00,000"
+    in house_status houseless,kutcha "No pucca house anywhere in India"
+    num home_loan_amount > 0 "Takes a home loan"
+    num home_loan_amount <= 2500000 "Loan up to Rs 25 lakh"
+    num house_cost <= 3500000 "House value up to Rs 35 lakh"
+benefit =
+    fixed one_time=180000 "Interest subsidy of up to Rs 1.8 lakh over the loan period (4% on loan up to Rs 8 lakh)."
+
+scheme sbm_g
+name = Swachh Bharat Mission (Gramin): Individual Household Toilet incentive
+short = SBM-G Toilet Incentive
+ministry = Department of Drinking Water and Sanitation
+domains = social
+description = Incentive to build a toilet for eligible rural households.
+benefit_text = Rs 12,000 incentive per household toilet.
+link = https://swachhbharatmission.ddws.gov.in/
+how = Apply through your Gram Panchayat; the incentive is paid after the toilet is built and verified.
+documents = Aadhaar | Bank account | Gram Panchayat verification
+checked = 2026-10
+list_based = yes
+rules =
+    in area rural "Rural household"
+    bool has_toilet no "Household has no toilet"
+    any "Eligible household category" (
+        bool bpl yes "BPL"
+        in category sc,st "SC / ST"
+        bool women_headed yes "Woman-headed household"
+        num disability_pct >= 40 "Disabled member"
+        in occupation agri_labour "Landless agricultural labourer"
+    )
+benefit =
+    fixed one_time=12000 "Rs 12,000 incentive for constructing a toilet."
+
+scheme pmuy
+name = Pradhan Mantri Ujjwala Yojana (PMUY)
+short = PM Ujjwala Yojana (LPG)
+ministry = Ministry of Petroleum and Natural Gas
+domains = social
+description = Deposit-free LPG connection for women from poor households.
+benefit_text = Free connection, first refill and stove, plus Rs 300 targeted subsidy per refill.
+link = https://www.pmuy.gov.in/
+how = Apply at a nearby LPG distributor, or on the scheme portal, with a KYC form.
+documents = Aadhaar | Ration card / BPL proof | Bank account
+status_note = Number of subsidised refills has changed between years (9 in 2025-26, reported 4 for 2026-27) - verify.
+checked = 2026-10
+list_based = yes
+rules =
+    in gender female "Adult woman"
+    num age >= 18 "Age 18 years or more"
+    bool has_lpg no "No LPG connection in the household"
+    any "Poor / priority household" (
+        bool bpl yes "BPL"
+        in ration_card aay,phh "AAY / Priority ration card"
+        in category sc,st "SC / ST"
+    )
+benefit =
+    fixed annual=1200 years=99 "Rs 300 per refill x 4 subsidised refills per year (as reported for 2026-27) = Rs 1,200; connection, stove and first refill are free (not valued)."
+
+scheme pmgkay
+name = Pradhan Mantri Garib Kalyan Anna Yojana (PMGKAY / NFSA)
+short = Free Foodgrain (NFSA / PMGKAY)
+ministry = Department of Food and Public Distribution
+domains = social
+description = Free foodgrain to ration-card households under the National Food Security Act.
+benefit_text = 5 kg free foodgrain per person per month (AAY: 35 kg per household).
+link = https://nfsa.gov.in/
+how = No separate application: the grain comes through your ration card at the fair price shop. Apply for a ration card with your state food department.
+documents = Ration card
+notes = Rupee value is an assumption (Rs 25/kg); the benefit is in kind.
+checked = 2026-10
+rules =
+    in ration_card aay,phh "Holds an AAY or Priority Household ration card"
+benefit =
+    tiered (
+        tier (
+            in ration_card aay ""
+        )
+        fixed annual=10500 years=99 "AAY: 35 kg x 12 months x assumed Rs 25/kg"
+        default
+        perunit field=household_size rate=1500  mode=annual "PHH: 5 kg per person x 12 months x assumed Rs 25/kg per member (the Rs 25/kg valuation is a prototype assumption)."
+    )
+
+scheme nsap_ignoaps
+name = NSAP: Indira Gandhi National Old Age Pension Scheme
+short = Old Age Pension (IGNOAPS)
+ministry = Ministry of Rural Development
+domains = social
+description = Pension for elderly BPL persons.
+benefit_text = Central pension of Rs 200 per month (60-79) or Rs 500 per month (80+); states add to this.
+link = https://nsap.nic.in/
+how = Apply through your Gram Panchayat, municipality or the state social welfare office.
+documents = Age proof | BPL proof | Bank account
+notes = State top-up is not counted.
+checked = 2026-10
+list_based = yes
+rules =
+    num age >= 60 "Age 60 years or more"
+    bool bpl yes "BPL household"
+benefit =
+    tiered (
+        tier (
+            num age >= 80 ""
+        )
+        fixed annual=6000 years=99 "Central share Rs 500/month (80+)"
+        default
+        fixed annual=2400 years=99 "Central share Rs 200/month (60-79)"
+    )
+
+scheme nsap_ignwps
+name = NSAP: Indira Gandhi National Widow Pension Scheme
+short = Widow Pension (IGNWPS)
+ministry = Ministry of Rural Development
+domains = social
+description = Pension for BPL widows.
+benefit_text = Central pension of Rs 300 per month.
+link = https://nsap.nic.in/
+how = Apply through your Gram Panchayat, municipality or the state social welfare office.
+documents = Husband's death certificate | BPL proof | Bank account
+notes = State top-up is not counted.
+checked = 2026-10
+list_based = yes
+rules =
+    bool widowed yes "Widow"
+    num age >= 40 "Age 40 years or more"
+    num age <= 79 "Age 79 years or less"
+    bool bpl yes "BPL household"
+benefit =
+    fixed annual=3600 years=99 "Central share Rs 300/month"
+
+scheme nsap_igndps
+name = NSAP: Indira Gandhi National Disability Pension Scheme
+short = Disability Pension (IGNDPS)
+ministry = Ministry of Rural Development
+domains = social
+description = Pension for BPL persons with severe disability.
+benefit_text = Central pension of Rs 300 per month.
+link = https://nsap.nic.in/
+how = Apply through your Gram Panchayat, municipality or the state social welfare office.
+documents = Disability certificate | BPL proof | Bank account
+notes = State top-up is not counted.
+checked = 2026-10
+list_based = yes
+rules =
+    num disability_pct >= 80 "Disability of 80% or more"
+    num age >= 18 "Age 18 years or more"
+    num age <= 79 "Age 79 years or less"
+    bool bpl yes "BPL household"
+benefit =
+    fixed annual=3600 years=99 "Central share Rs 300/month"
+
+scheme apy
+name = Atal Pension Yojana (APY)
+short = Atal Pension Yojana
+ministry = Ministry of Finance (PFRDA)
+domains = social
+description = Guaranteed pension for workers in the unorganised sector.
+benefit_text = Fixed pension of Rs 1,000 to Rs 5,000 per month after age 60.
+link = https://www.jansuraksha.gov.in/
+how = Open an APY account at your bank or post office with Aadhaar and a mobile number.
+documents = Aadhaar | Bank account | Mobile number
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    num age <= 40 "Age 40 years or less"
+    bool has_bank_account yes "Has a bank account"
+    bool income_tax_payer no "Not an income tax payer"
+benefit =
+    fixed future_pension_monthly=5000 "Pension of up to Rs 5,000 per month from age 60 (you choose the amount and contribute accordingly)."
+
+scheme pmsby
+name = Pradhan Mantri Suraksha Bima Yojana (PMSBY)
+short = PM Suraksha Bima Yojana
+ministry = Ministry of Finance
+domains = social
+description = Accident insurance at a very low premium.
+benefit_text = Rs 2 lakh on accidental death / total disability; Rs 1 lakh on partial disability; premium Rs 20 per year.
+link = https://www.jansuraksha.gov.in/
+how = Enrol through your bank or post office savings account, by giving consent for auto-debit.
+documents = Aadhaar | Bank account (auto-debit)
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    num age <= 70 "Age 70 years or less"
+    bool has_bank_account yes "Has a bank account"
+benefit =
+    fixed cover=200000 "Rs 2 lakh accident cover for Rs 20 per year."
+
+scheme pmjjby
+name = Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)
+short = PM Jeevan Jyoti Bima Yojana
+ministry = Ministry of Finance
+domains = social
+description = Life insurance at a low premium.
+benefit_text = Rs 2 lakh life cover; premium Rs 436 per year.
+link = https://www.jansuraksha.gov.in/
+how = Enrol through your bank or post office savings account, by giving consent for auto-debit.
+documents = Aadhaar | Bank account (auto-debit)
+status_note = Verify the current premium.
+checked = 2026-10
+rules =
+    num age >= 18 "Age 18 years or more"
+    num age <= 50 "Age 50 years or less"
+    bool has_bank_account yes "Has a bank account"
+benefit =
+    fixed cover=200000 "Rs 2 lakh life cover for about Rs 436 per year."
+
+scheme pmjdy
+name = Pradhan Mantri Jan Dhan Yojana (PMJDY)
+short = PM Jan Dhan Yojana
+ministry = Department of Financial Services
+domains = social
+description = Zero-balance bank account with accident cover and overdraft.
+benefit_text = Zero-balance account, RuPay card with Rs 2 lakh accident cover, overdraft up to Rs 10,000.
+link = https://pmjdy.gov.in/
+how = Open the account at any bank branch or through a Banking Correspondent with KYC documents.
+documents = Aadhaar or other KYC
+checked = 2026-10
+rules =
+    bool has_bank_account no "Does not yet have a bank account"
+    num age >= 10 "Age 10 years or more"
+benefit =
+    fixed cover=200000 "RuPay-card accident cover of Rs 2 lakh; overdraft facility not valued."
+
+scheme adip
+name = Assistance to Disabled Persons for Purchase of Aids and Appliances (ADIP)
+short = ADIP Assistive Devices
+ministry = Department of Empowerment of Persons with Disabilities
+domains = social
+description = Free or subsidised assistive devices.
+benefit_text = Full cost of devices if family income up to Rs 22,500/month; 50% subsidy up to Rs 30,000/month.
+link = https://disabilityaffairs.gov.in/
+how = Apply through your district authorities or the implementing agency named on the scheme page, with a disability certificate.
+documents = Disability certificate | Income certificate | Aadhaar
+checked = 2026-10
+list_based = yes
+rules =
+    num disability_pct >= 40 "Disability of 40% or more"
+    num annual_income <= 360000 "Family income up to Rs 30,000 per month (Rs 3,60,000 per year)"
+benefit =
+    service "Free / part-subsidised assistive devices (cost sharing applies above Rs 22,500/month)"

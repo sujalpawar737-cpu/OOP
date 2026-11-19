@@ -1,0 +1,345 @@
+field state
+label = State / Union Territory of residence
+type = select
+required = yes
+options = andhra_pradesh:Andhra Pradesh | arunachal_pradesh:Arunachal Pradesh | assam:Assam | bihar:Bihar | chhattisgarh:Chhattisgarh | goa:Goa | gujarat:Gujarat | haryana:Haryana | himachal_pradesh:Himachal Pradesh | jharkhand:Jharkhand | karnataka:Karnataka | kerala:Kerala | madhya_pradesh:Madhya Pradesh | maharashtra:Maharashtra | manipur:Manipur | meghalaya:Meghalaya | mizoram:Mizoram | nagaland:Nagaland | odisha:Odisha | punjab:Punjab | rajasthan:Rajasthan | sikkim:Sikkim | tamil_nadu:Tamil Nadu | telangana:Telangana | tripura:Tripura | uttar_pradesh:Uttar Pradesh | uttarakhand:Uttarakhand | west_bengal:West Bengal | andaman_and_nicobar_islands:Andaman and Nicobar Islands | chandigarh:Chandigarh | dadra_and_nagar_haveli_and_daman_and_diu:Dadra and Nagar Haveli and Daman and Diu | delhi:Delhi | jammu_and_kashmir:Jammu and Kashmir | ladakh:Ladakh | lakshadweep:Lakshadweep | puducherry:Puducherry
+
+field age
+label = Age of the person who will benefit (years)
+type = number
+unit = years
+required = yes
+min = 0
+max = 120
+
+field gender
+label = Gender
+type = select
+options = male:Male | female:Female | other:Other
+
+field area
+label = Area of residence
+type = select
+options = rural:Rural | urban:Urban
+
+field category
+label = Social category
+type = select
+options = general:General / EWS | obc:OBC | sc:Scheduled Caste (SC) | st:Scheduled Tribe (ST)
+
+field minority
+label = Do you belong to a notified minority community (Muslim, Christian, Sikh, Buddhist, Jain, Parsi)?
+type = bool
+
+field annual_income
+label = Total annual family income (Rs)
+type = number
+unit = inr
+help = From all sources, as on your income certificate.
+min = 0
+max = 1000000000
+
+field monthly_income
+label = Your own monthly income (Rs)
+type = number
+unit = inr
+min = 0
+max = 10000000
+
+field disability_pct
+label = Disability percentage (enter 0 if none)
+type = number
+unit = percent
+min = 0
+max = 100
+
+field bpl
+label = Is your household listed as Below Poverty Line (BPL) / holds a BPL card?
+type = bool
+
+field household_size
+label = Number of members in your household
+type = number
+min = 1
+max = 50
+
+field occupation
+label = Main occupation
+type = select
+options = farmer:Farmer / cultivator | agri_labour:Agricultural labourer | fisher:Fisher / fish farmer | artisan:Traditional artisan / craftsperson | street_vendor:Street vendor | daily_wage:Daily-wage / construction / domestic worker | salaried_private:Salaried (private) | salaried_govt:Salaried (government / PSU) | self_employed:Self-employed / business | student:Student | homemaker:Homemaker | unemployed:Unemployed | other:Other
+
+field income_tax_payer
+label = Do you (or the head of household) pay income tax?
+type = bool
+
+field govt_employee_family
+label = Is any family member in regular government / PSU service?
+type = bool
+
+field govt_employee_self
+label = Are you in regular government / PSU service (excluding Group D / MTS)?
+type = bool
+
+field unorganised_worker
+label = Do you work in the unorganised sector (daily wage, domestic work, street vending, agri labour, etc.)?
+type = bool
+
+field covered_other_pension
+label = Are you already covered under NPS, ESIC or EPFO?
+type = bool
+
+field study_level
+label = Current level of study
+type = select
+options = not_studying:Not studying | school_1_8:School: Class 1-8 | school_9_10:School: Class 9-10 | school_11_12:School: Class 11-12 | diploma:Diploma / ITI / Polytechnic | ug:Undergraduate degree | pg:Postgraduate degree
+
+field course_stream
+label = Type of course
+type = select
+options = general:General (arts / commerce / science etc.) | technical_professional:Technical / professional (engineering, medicine, pharmacy, management, etc.) | basic_science:Basic / natural science (B.Sc / Integrated M.Sc)
+
+field institution_type
+label = Type of institution
+type = select
+options = govt_aided:Government / government-aided / local body | private:Private (unaided)
+
+field last_exam_percent
+label = Marks in your previous exam (%)
+type = number
+unit = percent
+min = 0
+max = 100
+
+field class12_percentile
+label = Class 12 percentile within your board / stream (if known)
+type = number
+help = Leave blank if you do not know.
+min = 0
+max = 100
+
+field hosteller
+label = Do you stay in a hostel?
+type = bool
+
+field course_duration_years
+label = Duration of your course (years)
+type = number
+unit = years
+min = 1
+max = 8
+
+field annual_fees
+label = Compulsory annual fees charged by your institution (Rs)
+type = number
+unit = inr
+min = 0
+max = 10000000
+
+field edu_loan_amount
+label = Education loan amount you need / have (Rs)
+type = number
+unit = inr
+min = 0
+max = 100000000
+
+field qheis
+label = Is your institution a notified Quality Higher Education Institution (QHEI) under PM-Vidyalaxmi?
+type = bool
+
+field other_scholarship
+label = Are you already receiving another government scholarship, fee reimbursement or interest subvention?
+type = bool
+
+field land_status
+label = Your relationship to agricultural land
+type = select
+options = owner:Own cultivable land (in land records) | tenant:Tenant / sharecropper / lessee | landless:No agricultural land
+
+field land_hectares
+label = Area of land cultivated (hectares)
+type = number
+unit = ha
+min = 0
+max = 10000
+
+field grows_crops
+label = Do you grow crops in a notified area / season?
+type = bool
+
+field crop_loan_amount
+label = Short-term crop loan you need through Kisan Credit Card (Rs)
+type = number
+unit = inr
+min = 0
+max = 100000000
+
+field agri_infra_loan
+label = Loan for agri-infrastructure project (storage, processing, etc.) (Rs)
+type = number
+unit = inr
+min = 0
+max = 1000000000
+
+field solar_pump_cost
+label = Estimated cost of solar irrigation pump you plan to install (Rs)
+type = number
+unit = inr
+min = 0
+max = 100000000
+
+field machinery_cost
+label = Cost of farm machinery you plan to buy (Rs)
+type = number
+unit = inr
+min = 0
+max = 100000000
+
+field fisheries_project_cost
+label = Cost of fisheries project / unit you plan (Rs)
+type = number
+unit = inr
+min = 0
+max = 1000000000
+
+field high_office
+label = Do you hold (or have held) high office such as Minister, MP, MLA, Mayor or similar?
+type = bool
+
+field monthly_pension_10k
+label = Do you receive a monthly pension of Rs 10,000 or more (retired government pensioner)?
+type = bool
+
+field organic_interest
+label = Are you willing to adopt organic farming in a farmer cluster?
+type = bool
+
+field maternity_status
+label = Pregnancy status
+type = select
+options = none:Not pregnant / not a new mother | pregnant:Pregnant | lactating:Lactating mother (recent delivery)
+
+field child_order
+label = Which child is this?
+type = select
+options = first:First living child | second_girl:Second child, and it is a girl | other:Other
+
+field delivery_institutional
+label = Will the delivery be in a government / accredited health facility?
+type = bool
+
+field tb_patient
+label = Are you a notified Tuberculosis (TB) patient on treatment?
+type = bool
+
+field kutcha_house
+label = Do you live in a kutcha house (kutcha walls and roof)?
+type = bool
+
+field landless_manual_labour
+label = Is your household landless and dependent on manual casual labour?
+type = bool
+
+field female_headed_no_adult_male
+label = Is your household headed by a woman with no adult male member (16-59)?
+type = bool
+
+field ration_card
+label = Ration card type
+type = select
+options = none:No ration card | aay:Antyodaya (AAY) | phh:Priority Household (PHH) | apl:Other / APL
+
+field qualification
+label = Highest education completed
+type = select
+options = below_8:Below Class 8 | 8_pass:Class 8 pass | 10_pass:Class 10 pass | 12_pass:Class 12 pass | graduate:Graduate | postgraduate:Postgraduate
+
+field business_stage
+label = Business stage
+type = select
+options = new:Planning a new unit / first-time enterprise | existing:Running an existing unit | none:No business plan
+
+field sector
+label = Sector of business
+type = select
+options = manufacturing:Manufacturing | service:Service | trading:Trading / retail | food_processing:Food processing | agri_allied:Agri-allied (dairy, poultry, etc.)
+
+field project_cost
+label = Total project cost (Rs)
+type = number
+unit = inr
+min = 0
+max = 10000000000
+
+field loan_required
+label = Loan amount required (Rs)
+type = number
+unit = inr
+min = 0
+max = 10000000000
+
+field prior_pmegp_subsidy
+label = Have you ever taken a PMEGP loan/subsidy (or other government subsidy for this unit)?
+type = bool
+
+field prior_selfemp_loan
+label = Government self-employment loan (Mudra / PM SVANidhi) taken in the last 5 years
+type = select
+options = none:None | repaid:Taken and fully repaid | outstanding:Taken and not fully repaid
+
+field first_job_epfo
+label = Is this your first formal job, registered with EPFO (joined on/after 1 Aug 2025)?
+type = bool
+
+field monthly_salary
+label = Monthly salary / EPF wage (Rs)
+type = number
+unit = inr
+min = 0
+max = 10000000
+
+field house_status
+label = Current housing
+type = select
+options = houseless:Houseless | kutcha:Kutcha / dilapidated house | pucca:Own pucca house
+
+field owns_vehicle
+label = Does your household own a motorised vehicle, mechanised farm equipment or fishing boat?
+type = bool
+
+field owns_plot
+label = Do you own a plot / land on which you can build a house?
+type = bool
+
+field home_loan_amount
+label = Home loan amount you need (Rs)
+type = number
+unit = inr
+min = 0
+max = 1000000000
+
+field house_cost
+label = Value of the house you plan to buy / build (Rs)
+type = number
+unit = inr
+min = 0
+max = 1000000000
+
+field has_toilet
+label = Does your household have a toilet?
+type = bool
+
+field has_lpg
+label = Does your household already have an LPG connection?
+type = bool
+
+field has_bank_account
+label = Do you have a bank account?
+type = bool
+
+field widowed
+label = Are you a widow?
+type = bool
+
+field women_headed
+label = Is your household headed by a woman?
+type = bool
